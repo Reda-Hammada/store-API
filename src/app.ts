@@ -4,13 +4,13 @@ import express from "express";
 import productRouter from "./routes/ProductRouter";
 import categoryRouter from "./routes/CategoryRouter";
 const app: Application = express();
-
+const cors = require("cors");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/v1/products", productRouter);
+app.use(cors());
 app.use("/api/v1/categories", categoryRouter);
-
 app.use(
   (
     err: errorExceptionType,

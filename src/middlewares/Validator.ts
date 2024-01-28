@@ -1,55 +1,36 @@
-import { checkSchema, ValidationChain } from "express-validator";
+import { body, checkSchema, ValidationChain } from "express-validator";
 class Validator {
   static productValidator = () => {
-    return checkSchema({
-      productName: {
-        isEmpty: {
-          negated: true,
-          errorMessage: "product name cannot be empty",
-        },
-        escape: true,
-      },
-      price: {
-        isEmpty: {
-          negated: true,
-          errorMessage: " a product must have a price",
-        },
-        escape: true,
-
-        isNumeric: {
-          errorMessage: "product price should be a number",
-        },
-      },
-      categoryId: {
-        isEmpty: {
-          negated: true,
-          errorMessage: "a product must be assigned to a category",
-        },
-        escape: true,
-      },
-      sizes: {
-        isJSON: true,
-        optional: true,
-        escape: true,
-      },
-
-      colors: {
-        isJSON: true,
-        optional: true,
-        escape: true,
-      },
-    });
+    return [
+      body("productName")
+        .notEmpty()
+        .trim()
+        .escape()
+        .withMessage("A product must have a name"),
+      body("price")
+        .isNumeric()
+        .withMessage("A product should be a number")
+        .notEmpty()
+        .withMessage("A product must have a price")
+        .trim()
+        .escape(),
+      body("categoryId")
+        .notEmpty()
+        .withMessage("a category should be assigned to product")
+        .trim()
+        .escape(),
+      body("sizes").optional().isJSON(),
+      body("colors").optional().isJSON(),
+    ];
   };
   static categoryValidator = () => {
-    return checkSchema({
-      categoryName: {
-        isEmpty: {
-          negated: true,
-          errorMessage: "A category must have a name",
-        },
-        escape: true,
-      },
-    });
+    return [
+      body("categoryName")
+        .notEmpty()
+        .trim()
+        .escape()
+        .withMessage("A category should have a name"),
+    ];
   };
   static userValidator = () => {};
 }

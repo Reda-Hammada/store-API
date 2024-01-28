@@ -1,4 +1,3 @@
-import { validationResult } from "express-validator";
 import CategoryRepository from "../repositories/CategoryRepository";
 import ErrorClass from "./ErrorClass";
 import { Request } from "express";
@@ -15,8 +14,6 @@ class CategoryService extends ErrorClass {
   };
 
   public createCategoryFromService = async (req: Request) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) this.throwValidationError(errors.array());
     const category = await this.categoryRepository.insertCategoryIntoDB(req);
     return category;
   };
@@ -39,10 +36,6 @@ class CategoryService extends ErrorClass {
   };
 
   public updateCategoryFromService = async (req: Request) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      this.throwValidationError(errors.array());
-    }
     const category = await this.categoryRepository.updateCategoryFromRepo(req);
     if (!category) {
       this.throwNotFoundError(

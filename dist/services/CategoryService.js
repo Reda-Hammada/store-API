@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_validator_1 = require("express-validator");
 const ErrorClass_1 = __importDefault(require("./ErrorClass"));
 class CategoryService extends ErrorClass_1.default {
     constructor(categoryRepository) {
@@ -25,9 +24,6 @@ class CategoryService extends ErrorClass_1.default {
             return categories;
         });
         this.createCategoryFromService = (req) => __awaiter(this, void 0, void 0, function* () {
-            const errors = (0, express_validator_1.validationResult)(req);
-            if (!errors.isEmpty())
-                this.throwValidationError(errors.array());
             const category = yield this.categoryRepository.insertCategoryIntoDB(req);
             return category;
         });
@@ -46,10 +42,6 @@ class CategoryService extends ErrorClass_1.default {
             return category;
         });
         this.updateCategoryFromService = (req) => __awaiter(this, void 0, void 0, function* () {
-            const errors = (0, express_validator_1.validationResult)(req);
-            if (!errors.isEmpty()) {
-                this.throwValidationError(errors.array());
-            }
             const category = yield this.categoryRepository.updateCategoryFromRepo(req);
             if (!category) {
                 this.throwNotFoundError(`we do not have a record of category with id ${req.params.id}`);

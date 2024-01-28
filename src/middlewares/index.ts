@@ -1,15 +1,22 @@
-import { Request, Response, NextFunction, response } from "express";
-import Validator from "./Validator";
+import { Request, Response, NextFunction } from "express";
+import { validationResult } from "express-validator";
 
 const middlewares = {
-  productValidator(req: Request, res: Response, next: NextFunction) {
-    Validator.productValidator()(req, res, next);
-    next();
+  validateRequest: function (validations: any) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      for (let validation of validations) {
+        await validation.run(req);
+      }
+
+      const errors = validationResult(req);
+      if (errors.isEmpty()) return next();
+
+      res
+        .status(400)
+        .json({ message: "Invalid request", errors: errors.array() });
+    };
   },
 
-  categoryValidator(req: Request, res: Response, next: NextFunction) {
-    Validator.categoryValidator()(req, res, next);
-    next();
-  },
+  logger: function () {},
 };
 export default middlewares;

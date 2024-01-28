@@ -53,7 +53,7 @@ class CategoryController extends BaseController_1.default {
                 this.SuccessResponse(res, 200, "Category created successfully", category);
             }
             catch (throwValidationError) {
-                this.ErrorrResponse(res, 422, throwValidationError.message);
+                this.ErrorrResponse(res, 400, throwValidationError.message);
             }
         });
         /**
@@ -89,7 +89,6 @@ class CategoryController extends BaseController_1.default {
                 this.ErrorrResponse(res, 404, throwNotFoundError.message);
             }
         });
-        this.somefunction = () => { };
     }
 }
 CategoryController.createInstance = () => {

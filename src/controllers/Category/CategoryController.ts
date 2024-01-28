@@ -72,7 +72,7 @@ class CategoryController extends BaseController {
     } catch (throwValidationError) {
       this.ErrorrResponse(
         res,
-        422,
+        400,
         (throwValidationError as errorExceptionType).message
       );
     }
