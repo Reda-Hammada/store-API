@@ -2,7 +2,7 @@ import BaseController from "../BaseController";
 import CategoryService from "../../services/CategoryService";
 import CategoryRepository from "../../repositories/CategoryRepository";
 import { errorExceptionType } from "../../types/errorException.types";
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import ErrorClass from "../../services/ErrorClass";
 
 class CategoryController extends BaseController {

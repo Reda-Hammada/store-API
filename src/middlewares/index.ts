@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
-
 const middlewares = {
   validateRequest: function (validations: any) {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -10,13 +9,10 @@ const middlewares = {
 
       const errors = validationResult(req);
       if (errors.isEmpty()) return next();
-
       res
         .status(400)
         .json({ message: "Invalid request", errors: errors.array() });
     };
   },
-
-  logger: function () {},
 };
 export default middlewares;

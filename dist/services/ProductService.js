@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ErrorClass_1 = __importDefault(require("./ErrorClass"));
-const express_validator_1 = require("express-validator");
 class ProductService extends ErrorClass_1.default {
     constructor(productRepository) {
         super();
@@ -37,17 +36,11 @@ class ProductService extends ErrorClass_1.default {
     }
     createProductFromRepo(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            const errors = (0, express_validator_1.validationResult)(req);
-            if (!errors.isEmpty())
-                this.throwValidationError(errors.array());
             yield this.productRepository.createProduct(req);
         });
     }
     updateProductFromRepo(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            const errors = (0, express_validator_1.validationResult)(req);
-            if (!errors.isEmpty())
-                this.throwValidationError(errors.array());
             const product = yield this.productRepository.updateProduct(req);
             if (!product) {
                 this.throwNotFoundError("this product does not exist in our record");

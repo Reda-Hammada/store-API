@@ -24,6 +24,5 @@ const middlewares = {
                 .json({ message: "Invalid request", errors: errors.array() });
         });
     },
-    logger: function () { },
 };
 exports.default = middlewares;

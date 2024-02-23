@@ -1,6 +1,5 @@
 import ErrorClass from "./ErrorClass";
 import type ProductRepository from "../repositories/ProductRepository";
-import { validationResult } from "express-validator";
 import { Request } from "express";
 import { productsType } from "../types/products.type";
 class ProductService extends ErrorClass {
@@ -20,15 +19,11 @@ class ProductService extends ErrorClass {
     return product;
   }
 
-  public async createProductFromRepo(req: Request): Promise<void> {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) this.throwValidationError(errors.array());
+  public async createProductFromRepo(req: Request) {
     await this.productRepository.createProduct(req);
   }
 
-  public async updateProductFromRepo(req: Request){
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) this.throwValidationError(errors.array());
+  public async updateProductFromRepo(req: Request) {
     const product = await this.productRepository.updateProduct(req);
     if (!product) {
       this.throwNotFoundError("this product does not exist in our record");

@@ -4,7 +4,7 @@ import ProductService from "../services/ProductService";
 import ProductRepository from "../repositories/ProductRepository";
 import middlewares from "../middlewares";
 import Validator from "../middlewares/Validator";
-
+import uploadMiddleware from "../middlewares/multer";
 const productController = ProductController.createInstance(
   new ProductService(new ProductRepository())
 );
@@ -13,7 +13,10 @@ router
   .route("/")
   .get(productController.getAllProducts)
   .post(
-    [middlewares.validateRequest(Validator.productValidator())],
+    [
+      uploadMiddleware.array("images"),
+      middlewares.validateRequest(Validator.productValidator()),
+    ],
     productController.createProduct
   );
 
