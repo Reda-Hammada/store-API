@@ -1,0 +1,4 @@
+enum ROLE {
+  SUPERADMIN = "SUPERADMIN",
+  ADMIN = "ADMIN",
+}

@@ -9,8 +9,10 @@ const userController = UserController.createInstance(
 );
 const router = createRouter();
 router
-  .route("/")
+  .route("/login")
   .post(
-    [middlewares.validateRequest(Validator.signInValidator)],
+    [middlewares.validateRequest(Validator.signInValidator())],
     userController.signIn
   );
+
+export default router;

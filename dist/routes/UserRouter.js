@@ -12,5 +12,6 @@ const Validator_1 = __importDefault(require("../middlewares/Validator"));
 const userController = UserController_1.default.createInstance(new UserService_1.default(new UserRepository_1.default()));
 const router = (0, router_1.default)();
 router
-    .route("/")
-    .post([middlewares_1.default.validateRequest(Validator_1.default.signInValidator)], userController.signIn);
+    .route("/login")
+    .post([middlewares_1.default.validateRequest(Validator_1.default.signInValidator())], userController.signIn);
+exports.default = router;

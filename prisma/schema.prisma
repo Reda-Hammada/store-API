@@ -31,7 +31,7 @@ model User {
   role      Role   @default(ADMIN)
   firstName String
   lastName  String
-  isVerified Boolean
+  isVerified Boolean @default(false)
 }
 
 model Image {

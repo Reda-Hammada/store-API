@@ -11,7 +11,7 @@ const productController = ProductController.createInstance(
 const router = createRouter();
 router
   .route("/")
-  .get(productController.getAllProducts)
+  .get([middlewares.checkMethod],productController.getAllProducts)
   .post(
     [
       uploadMiddleware.array("images"),
