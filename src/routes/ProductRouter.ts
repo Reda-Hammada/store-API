@@ -5,13 +5,17 @@ import ProductRepository from "../repositories/ProductRepository";
 import middlewares from "../middlewares";
 import Validator from "../middlewares/Validator";
 import uploadMiddleware from "../middlewares/multer";
+
 const productController = ProductController.createInstance(
   new ProductService(new ProductRepository())
 );
 const router = createRouter();
 router
   .route("/")
-  .get([middlewares.checkMethod],productController.getAllProducts)
+  .get(
+    [middlewares.checkMethod, middlewares.checkAuth],
+    productController.getAllProducts
+  )
   .post(
     [
       uploadMiddleware.array("images"),

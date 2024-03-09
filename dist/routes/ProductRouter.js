@@ -14,7 +14,7 @@ const productController = ProductController_1.default.createInstance(new Product
 const router = (0, router_1.default)();
 router
     .route("/")
-    .get([middlewares_1.default.checkMethod], productController.getAllProducts)
+    .get([middlewares_1.default.checkMethod, middlewares_1.default.checkAuth], productController.getAllProducts)
     .post([
     multer_1.default.array("images"),
     middlewares_1.default.validateRequest(Validator_1.default.productValidator()),

@@ -5,7 +5,6 @@ const validateRequest = (validations: any) => {
     for (let validation of validations) {
       await validation.run(req);
     }
-
     const errors = validationResult(req);
     if (errors.isEmpty()) return next();
     res
@@ -14,4 +13,4 @@ const validateRequest = (validations: any) => {
   };
 };
 
-export default validateRequest
+export default validateRequest;

@@ -11,8 +11,6 @@ class UserController extends BaseController {
     super();
   }
 
-  protected jwt = jwt;
-
   public static createInstance = (userService: UserService): UserController => {
     return new UserController(new UserService(new UserRepository()));
   };
@@ -30,8 +28,20 @@ class UserController extends BaseController {
         role: user?.role,
       };
       const secret = process.env.JWT_SECRET;
-      const token = jwt.sign({ user: userData }, secret as any);
-      this.SuccessResponse(res, 200, "success", { token: token });
+      const token = jwt.sign({ user: userData }, secret as any, {
+        expiresIn: 2 * 24 * 60 * 60 * 1000,
+      });
+
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "strict",
+        maxAge: 2 * 24 * 60 * 60 * 1000,
+        secure: true,
+      });
+
+      this.SuccessResponse(res, 200, "success", {
+        messge: "You habe been logged successfully",
+      });
     } catch (err) {
       if (err instanceof ErrorClass) {
         switch (err.name) {

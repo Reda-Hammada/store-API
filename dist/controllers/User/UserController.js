@@ -22,7 +22,6 @@ class UserController extends BaseController_1.default {
     constructor(userService) {
         super();
         this.userService = userService;
-        this.jwt = jsonwebtoken_1.default;
         this.signIn = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
             const userCredentials = { email: email, password: password };
@@ -35,8 +34,18 @@ class UserController extends BaseController_1.default {
                     role: user === null || user === void 0 ? void 0 : user.role,
                 };
                 const secret = process_1.default.env.JWT_SECRET;
-                const token = jsonwebtoken_1.default.sign({ user: userData }, secret);
-                this.SuccessResponse(res, 200, "success", { token: token });
+                const token = jsonwebtoken_1.default.sign({ user: userData }, secret, {
+                    expiresIn: 2 * 24 * 60 * 60 * 1000,
+                });
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    sameSite: "strict",
+                    maxAge: 2 * 24 * 60 * 60 * 1000,
+                    secure: true,
+                });
+                this.SuccessResponse(res, 200, "success", {
+                    messge: "You habe been logged successfully",
+                });
             }
             catch (err) {
                 if (err instanceof ErrorClass_1.default) {
